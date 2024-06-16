@@ -1,6 +1,7 @@
 package com.example.hilton_challenge.view;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.hilton_challenge.R;
 import com.example.hilton_challenge.model.Geolocation;
@@ -20,6 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "MainActivity";
 
     private GeoViewmodel viewModel;
     private EditText ipAddressEditText;
@@ -30,29 +32,36 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Log.d(TAG, "onCreate: Initializing views");
         ipAddressEditText = findViewById(R.id.ipAddressEditText);
         Button searchButton = findViewById(R.id.searchButton);
         countryTextView = findViewById(R.id.countryTextView);
         cityTextView = findViewById(R.id.cityTextView);
-        regionTexView=  findViewById(R.id.regionTextView);
+        regionTexView = findViewById(R.id.regionTextView);
         zipTextView = findViewById(R.id.zipTextView);
 
+        Log.d(TAG, "onCreate: Setting up ViewModel");
         viewModel = new ViewModelProvider(this).get(GeoViewmodel.class);
 
+        Log.d(TAG, "onCreate: Observing LiveData");
         viewModel.getGeolocation().observe(this, this::displayResult);
 
         viewModel.getErrorMessage().observe(this, errorMessage -> {
             if (errorMessage != null) {
+                Log.e(TAG, "onCreate: Error message received: " + errorMessage);
                 Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show();
             }
         });
 
         searchButton.setOnClickListener(view -> {
             String ipAddress = ipAddressEditText.getText().toString();
+            Log.d(TAG, "onCreate: Search button clicked with IP: " + ipAddress);
             if (isValidIp(ipAddress)) {
+                Log.d(TAG, "onCreate: Valid IP address");
                 viewModel.fetchLocation(ipAddress);
                 ipAddressEditText.setText(null);
             } else {
+                Log.w(TAG, "onCreate: Invalid IP address");
                 Toast.makeText(MainActivity.this, "Invalid IP address", Toast.LENGTH_LONG).show();
             }
         });
@@ -61,19 +70,20 @@ public class MainActivity extends AppCompatActivity {
     private boolean isValidIp(String ip) {
         String ipPattern =
                 "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$";
-        return ip.matches(ipPattern);
+        boolean isValid = ip.matches(ipPattern);
+        Log.d(TAG, "isValidIp: " + ip + " is " + (isValid ? "valid" : "invalid"));
+        return isValid;
     }
+
     private void displayResult(Geolocation geolocation) {
         if (geolocation != null) {
+            Log.d(TAG, "displayResult: Displaying geolocation data");
             countryTextView.setText(geolocation.getCountry());
             cityTextView.setText(geolocation.getCity());
             regionTexView.setText(geolocation.getRegionName());
             zipTextView.setText(geolocation.getZip());
         } else {
-            countryTextView.setText("No data found");
+            Log.w(TAG, "displayResult: Geolocation data is null");
         }
     }
-
-
-
 }
