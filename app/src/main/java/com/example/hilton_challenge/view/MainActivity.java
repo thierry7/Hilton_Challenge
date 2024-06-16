@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     private GeoViewmodel viewModel;
     private EditText ipAddressEditText;
-    private TextView countryTextView, cityTextView, regionTexView, zipTextView;
+    private TextView countryTextView, cityTextView, regionTexView, zipTextView, ipTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: Initializing views");
         ipAddressEditText = findViewById(R.id.ipAddressEditText);
         Button searchButton = findViewById(R.id.searchButton);
+        ipTextView = findViewById(R.id.ipTextView);
         countryTextView = findViewById(R.id.countryTextView);
         cityTextView = findViewById(R.id.cityTextView);
         regionTexView = findViewById(R.id.regionTextView);
@@ -78,10 +79,11 @@ public class MainActivity extends AppCompatActivity {
     private void displayResult(Geolocation geolocation) {
         if (geolocation != null) {
             Log.d(TAG, "displayResult: Displaying geolocation data");
-            countryTextView.setText(geolocation.getCountry());
-            cityTextView.setText(geolocation.getCity());
-            regionTexView.setText(geolocation.getRegionName());
-            zipTextView.setText(geolocation.getZip());
+            ipTextView.setText(getString(R.string.requested_ip) + geolocation.getQuery());
+            countryTextView.setText(getString(R.string.country) + geolocation.getCountry());
+            cityTextView.setText(getString(R.string.city) + geolocation.getCity());
+            regionTexView.setText(getString(R.string.region) + geolocation.getRegionName());
+            zipTextView.setText(getString(R.string.zip_code) + geolocation.getZip());
         } else {
             Log.w(TAG, "displayResult: Geolocation data is null");
         }
