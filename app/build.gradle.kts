@@ -64,5 +64,6 @@ dependencies {
     implementation(libs.mockito.core)
     implementation(libs.mockwebserver)
     implementation(libs.core.testing)
+    annotationProcessor(libs.annotation)
 
 }

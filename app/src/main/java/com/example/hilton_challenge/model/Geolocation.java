@@ -3,9 +3,12 @@ package com.example.hilton_challenge.model;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import androidx.annotation.NonNull;
+
+
 @Entity(tableName = "geolocation")
 public class Geolocation {
-    @PrimaryKey(autoGenerate = true)
+
     private long timestamp;
     private String country;
     private String countryCode;
@@ -14,13 +17,14 @@ public class Geolocation {
     private String zip;
     private double lat;
     private double lon;
+    @PrimaryKey
+    @NonNull
     private String query;
 
-    // Default constructor required by Room
     public Geolocation() {
     }
 
-    public Geolocation(String s, String us, String california, String mountainView, double v, double v1) {
+    public Geolocation(@NonNull String s, String us, String california, String mountainView, double v, double v1) {
         query =s;
         country = us;
         city = california;
@@ -92,12 +96,11 @@ public class Geolocation {
     public void setLon(double lon) {
         this.lon = lon;
     }
-
+    @NonNull
     public String getQuery() {
         return query;
     }
-
-    public void setQuery(String query) {
+    public void setQuery(@NonNull String query) {
         this.query = query;
     }
 
