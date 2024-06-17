@@ -114,7 +114,7 @@ public class Geolocation {
         geolocation.setZip(response.getZip());
         geolocation.setLat(response.getLat());
         geolocation.setLon(response.getLon());
-        geolocation.setTimestamp(System.currentTimeMillis()); // Set current timestamp
+        geolocation.setTimestamp(System.currentTimeMillis());
         return geolocation;
     }
 }

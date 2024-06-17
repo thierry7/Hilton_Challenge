@@ -16,7 +16,6 @@ public class GeolocationResponse {
     private String org;
     private String as;
 
-    // Getters and setters
     public String getQuery() {
         return query;
     }
