@@ -1,9 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.Hilton_Challenge" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.Hilton_Challenge" parent="Theme.AppCompat">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.Hilton_Challenge" parent="Base.Theme.Hilton_Challenge" />
+    <style name="Theme.Hilton_Challenge" parent="Base.Theme.AppCompat" />
 </resources>

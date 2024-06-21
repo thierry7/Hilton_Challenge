@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
-    private GeoViewmodel viewModel;
+    GeoViewmodel viewModel;
     private EditText ipAddressEditText;
     private TextView countryTextView, cityTextView, regionTexView, zipTextView, ipTextView;
 
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         viewModel.getErrorMessage().observe(this, errorMessage -> {
             if (errorMessage != null) {
                 Log.e(TAG, "onCreate: Error message received: " + errorMessage);
-                Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show();
+                displayErrorMessage(errorMessage);
             }
         });
 
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         return isValid;
     }
 
-    private void displayResult(Geolocation geolocation) {
+    void displayResult(Geolocation geolocation) {
         if (geolocation != null) {
             Log.d(TAG, "displayResult: Displaying geolocation data");
             ipTextView.setText(getString(R.string.requested_ip) + geolocation.getQuery());
@@ -87,5 +87,9 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Log.w(TAG, "displayResult: Geolocation data is null");
         }
+    }
+    void displayErrorMessage(String errorMessage){
+        Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show();
+
     }
 }

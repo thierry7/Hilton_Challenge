@@ -41,6 +41,12 @@ android {
     packagingOptions {
         excludes.add("META-INF/gradle/incremental.annotation.processors")
     }
+    testOptions{
+        unitTests {
+            isIncludeAndroidResources = true
+
+        }
+    }
 }
 
 dependencies {
@@ -65,5 +71,6 @@ dependencies {
     implementation(libs.mockwebserver)
     implementation(libs.core.testing)
     annotationProcessor(libs.annotation)
-
+    testImplementation(libs.robolectric)
+    testImplementation(libs.hilt.android.testing)
 }
